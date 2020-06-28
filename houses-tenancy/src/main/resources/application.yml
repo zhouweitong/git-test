@@ -1,0 +1,17 @@
+server:
+  port: 8888
+spring:
+  redis:
+    port: 6379
+    host: 192.168.233.128
+    database: 0
+    password: 123456
+  datasource:
+    password: 1997217zou
+    username: root
+    url: jdbc:mysql://localhost:3306/houses_tenancy
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.zhou.housestenancy.bean
+

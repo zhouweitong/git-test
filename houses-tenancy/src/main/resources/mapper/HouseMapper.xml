@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.housestenancy.mapper.HouseMapper">
+    <select id="get" resultType="house">
+        SELECT * from house
+        <trim prefix="where" prefixOverrides="and">
+            <if test="houseLeaseState!=null">
+                houseLeaseState = #{houseLeaseState}
+            </if>
+        </trim>
+        <if test="size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getHouse" resultType="house" parameterType="house">
+        SELECT * from house
+        <trim prefix="where" prefixOverrides="and">
+            <if test="house.houseId!=null">
+                houseId= #{house.houseId}
+            </if>
+            <if test="house.houseLeaseState!=null">
+                AND houseLeaseState = #{house.houseLeaseState}
+            </if>
+            <if test="house.houseArea!=null">
+                AND houseArea = #{house.houseArea}
+            </if>
+            <if test="house.houseFloor!=null">
+                AND houseFloor = #{house.houseFloor}
+            </if>
+            <if test="house.houseOrientations!=null">
+                AND houseOrientations LIKE concat('%',#{house.houseOrientations},'%')
+            </if>
+            <if test="house.houseType!=null">
+                AND houseType LIKE concat('%',#{house.houseType},'%')
+            </if>
+            <if test="house.houseElevator!=null">
+                AND houseElevator = #{house.houseElevator}
+            </if>
+            <if test="house.houseBalcony!=null">
+                AND houseBalcony = #{house.houseBalcony}
+            </if>
+            <if test="house.houseRent!=null">
+                AND houseRent = #{house.houseRent}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="house">
+        INSERT INTO house (houseArea,houseFloor,houseOrientations,houseType,houseElevator,houseBalcony,
+        houseRent,houseAddressId,houseFurnitureId,housePublishTime,housePicturePath,houseLeaseState,houseDecorationDegree)VALUES (
+        #{houseArea},#{houseFloor},#{houseOrientations},#{houseType},#{houseElevator},#{houseBalcony},#{houseRent},#{houseAddressId},
+        #{houseFurnitureId},#{housePublishTime},#{housePicturePath},#{houseLeaseState},#{houseDecorationDegree})
+    </insert>
+
+    <update id="update">
+        UPDATE house SET housePublishTime=#{housePublishTime} where houseId=#{houseId}
+    </update>
+
+</mapper>

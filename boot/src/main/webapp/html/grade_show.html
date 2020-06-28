@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示所有课程</title>
+    <link rel="stylesheet" href="../css/grade_add.css">
+    <script src="../js/jquery-1.8.3.js" type="application/javascript"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url:"http://localhost:8080/grade/list",
+            type:"get",
+            dataType:"json",
+            success:function (data) {
+                for(var i = 0;i<data.length;i++){
+                    $("table tr:last").after($("<tr>" +
+                        "<td>"+data[i].gradeid+"</td>" +
+                        "<td>"+data[i].gradename+"</td>" +
+                        "<td><button onclick='deleteGrade(this)'>删除</button></td>" +
+                        "<td><button onclick='updateGrade(this)'>修改</button></td>" +
+                        " </tr>"))
+                }
+            }
+        });
+
+    });
+    function deleteGrade(node) {
+        var tyNode = node.parentNode.parentNode;
+        var id = tyNode.getElementsByTagName("td")[0].firstChild.nodeValue;
+        $.ajax({
+            url:"http://localhost:8080/grade/delete",
+            dataType:"json",
+            data:{"id":id},
+            success:function (data) {
+                if(data.msg=="success"){
+                    alert("删除成功");
+                    window.location.href="http://localhost:8080/html/grade_show.html";
+                }
+
+            }
+        })
+
+    }
+    function updateGrade(node) {
+        var tyNode = node.parentNode.parentNode;
+        var id = tyNode.getElementsByTagName("td")[0].firstChild.nodeValue;
+        //var name = tyNode.getElementsByTagName("td")[1].firstChild.nodeValue;
+        $.ajax({
+            url:"http://localhost:8080/grade/get",
+            dataType:"json",
+            data:{"id":id},
+            success:function (data) {
+                sessionStorage.setItem("gradename",data.gradename);
+                sessionStorage.setItem("id",data.gradeid);
+                window.location.href="http://localhost:8080/html/grade_update.html";
+
+
+            }
+        })
+
+    }
+
+</script>
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="4">课程列表</th>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>课程名称</td>
+        <td>删除</td>
+        <td>修改</td>
+    </tr>
+</table>
+
+</body>
+</html>

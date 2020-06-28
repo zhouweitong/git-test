@@ -1,0 +1,21 @@
+spring:
+ application:
+     name: blog-eureka-server
+server:
+  port: 7777
+eureka:
+  instance:
+    hostname: peer1
+  client:
+      register-with-eureka: false
+      fetch-registry: false
+      service-url:
+        defaultZone: http://root:123456@peer1:7777/eureka
+  server:
+      enable-self-preservation: false
+security:
+  user:
+    name: root
+    password: 123456
+  basic:
+    enabled: true

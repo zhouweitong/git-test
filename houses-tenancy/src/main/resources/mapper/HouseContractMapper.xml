@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.housestenancy.mapper.HouseContractMapper">
+    <insert id="save" parameterType="houseContract">
+        insert into house_contract (houseContractNo,houseContractSignDate,houseContractEndDate,houseContractUserId,
+        houseContractRemarks,houseContractTemplate)VALUES (#{houseContractNo},#{houseContractSignDate},#{houseContractEndDate},
+        #{houseContractUserId},#{houseContractRemarks},#{houseContractTemplate})
+
+    </insert>
+
+    <delete id="delete">
+        delete from house_contract where houseContractId=#{houseContractId}
+
+    </delete>
+
+    <select id="list" resultType="houseContract">
+      select * from house_contract
+      <trim prefix="where" prefixOverrides="and">
+          <if test="houseContractId!=null">
+              and houseContractId = #{houseContractId}
+          </if>
+      </trim>
+
+    </select>
+
+    <update id="update" parameterType="houseContract">
+        UPDATE house_contract SET houseContractNo=#{houseContractNo},
+        houseContractSignDate=#{houseContractSignDate},
+        houseContractEndDate=#{houseContractEndDate},
+        houseContractUserId=#{houseContractUserId},
+        houseContractRemarks=#{houseContractRemarks},
+        houseContractTemplate=#{houseContractTemplate}
+        WHERE houseContractId = #{houseContractId}
+    </update>
+</mapper>

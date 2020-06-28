@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.housestenancy.mapper.HouseLeaseMapper">
+  <resultMap id="houseMsg" type="houseLease">
+        <id property="houseLeaseId" column="houseLeaseId"/>
+        <result property="houseLeaseTerm" column="houseLeaseTerm"></result>
+        <result property="houseLeaseDeposit" column="houseLeaseDeposit"></result>
+        <result property="houseLeaseTotalAmount" column="houseLeaseTotalAmount"></result>
+        <result property="houseLeaseHouseId" column="houseLeaseHouseId"></result>
+        <result property="houseLeaseUserId" column="houseLeaseUserId"></result>
+        <result property="houseLeasePaymentMode" column="houseLeasePaymentMode"></result>
+        <result property="houseLeaseStartDate" column="houseLeaseStartDate"></result>
+        <result property="houseLeaseEndDate" column="houseLeaseEndDate"></result>
+        <result property="houseLeaseContractPicturePath" column="houseLeaseContractPicturePath"></result>
+        <result property="houseLeaseCreatedDate" column="houseLeaseCreatedDate"></result>
+      <collection property="user" ofType="user">
+          <id property="userId" column="userId"></id>
+          <result property="userName" column="userName"/>
+          <result property="userGender" column="userGender"/>
+          <result property="userBirthday" column="userBirthday"/>
+          <result property="userIdNumber" column="userIdNumber"/>
+          <result property="userAddress" column="userAddress"/>
+          <result property="userPicturePath" column="userPicturePath"/>
+          <result property="userNativePlace" column="userNativePlace"/>
+          <result property="userTel" column="userTel"/>
+          <result property="userRegistTime" column="userRegistTime"/>
+          <result property="userState" column="userState"/>
+      </collection>
+      <collection property="house" resultMap="houseAdd"></collection>
+  </resultMap>
+    <resultMap id="houseAdd" type="house">
+        <id property="houseId" column="houseId"/>
+        <result property="houseOrientations" column="houseOrientations"/>
+        <result property="houseType" column="houseType"/>
+        <result property="houseRent" column="houseRent"/>
+        <result property="houseArea" column="houseArea"/>
+        <result property="houseFloor" column="houseFloor"/>
+        <result property="houseElevator" column="houseElevator"/>
+        <result property="houseBalcony" column="houseBalcony"/>
+        <result property="houseAddressId" column="houseAddressId"/>
+        <result property="houseFurnitureId" column="houseFurnitureId"/>
+        <result property="housePublishTime" column="housePublishTime"/>
+        <result property="housePicturePath" column="housePicturePath"/>
+        <result property="houseLeaseState" column="houseLeaseState"/>
+        <result property="houseDecorationDegree" column="houseDecorationDegree"/>
+        <collection property="houseAddress" ofType="houseAddress">
+            <id property="houseAddressId" column="houseAddressId"/>
+            <result property="address" column="address"/>
+            <result property="info" column="info"/>
+        </collection>
+    </resultMap>
+    <select id="list" resultMap="houseMsg">
+      SELECT * FROM house_lease AS hl, house AS h ,house_address AS ha,
+      USER AS u WHERE hl.houseLeaseHouseId = h.houseId
+      AND h.houseAddressId = ha.houseAddressId
+      AND hl.houseLeaseUserId = u.userId limit #{start},#{size}
+  </select>
+    <select id="get" resultType="houseLease">
+        SELECT * from house_lease where houseLeaseId = #{houseLeaseId}
+    </select>
+
+    <insert id="save" parameterType="houseLease">
+        insert into house_lease (houseLeaseHouseId,houseLeaseUserId,houseLeaseTerm,houseLeasePaymentMode,houseLeaseDeposit,houseLeaseTotalAmount,
+        houseLeaseStartDate,houseLeaseEndDate,houseLeaseContractPicturePath,houseLeaseCreatedDate)VALUES (#{houseLeaseHouseId},#{houseLeaseUserId},
+        #{houseLeaseTerm},#{houseLeasePaymentMode},#{houseLeaseDeposit},#{houseLeaseTotalAmount},#{houseLeaseStartDate},#{houseLeaseEndDate},
+        #{houseLeaseContractPicturePath},#{houseLeaseCreatedDate});
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE from house_lease where houseLeaseId = #{houseLeaseId}
+
+    </delete>
+
+    <update id="update" parameterType="houseLease">
+        UPDATE house_lease SET houseLeaseHouseId=#{houseLeaseHouseId},
+        houseLeaseUserId=#{houseLeaseUserId},
+        houseLeaseTerm=#{houseLeaseTerm},
+        houseLeasePaymentMode=#{houseLeasePaymentMode},
+        houseLeaseDeposit=#{houseLeaseDeposit},
+        houseLeaseTotalAmount=#{houseLeaseTotalAmount},
+        houseLeaseStartDate=#{houseLeaseStartDate},
+        houseLeaseEndDate=#{houseLeaseEndDate},
+        houseLeaseContractPicturePath=#{houseLeaseContractPicturePath},
+        houseLeaseCreatedDate=#{houseLeaseCreatedDate} WHERE houseLeaseId = #{houseLeaseId}
+
+    </update>
+
+</mapper>

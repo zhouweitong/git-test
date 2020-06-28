@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: zwt-gateway-zull
+  cloud:
+    config:
+      uri: http://root:123456@localhost:5500
+      profile: dev    #指定环境，和码云上的文件名后部分对应
+      label: master      #指定分支，默认master

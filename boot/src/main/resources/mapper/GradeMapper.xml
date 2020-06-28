@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.boot.mapper.GradeMapper">
+    <select id="get" resultType="grade" parameterType="Integer">
+        select * from grade where gradeid = #{id}
+    </select>
+
+    <select id="list" resultType="grade">
+        select * from grade
+    </select>
+
+    <insert id="save" parameterType="String">
+        insert INTO grade(gradename) VALUES (#{gradeName})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from grade where gradeid = #{id}
+    </delete>
+
+    <update id="updata">
+        update grade set gradename=#{gradeName} where gradeid=#{id}
+    </update>
+</mapper>

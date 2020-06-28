@@ -1,0 +1,12 @@
+table,table tr,table td , table th{
+    border: 1px solid #00FF00;
+}
+table{
+    width: 70%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+table th{
+    background-color: cadetblue;
+}

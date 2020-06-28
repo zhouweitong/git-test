@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.housestenancy.mapper.GuestRecordMapper">
+   <select id="get" resultType="guestRecord">
+       SELECT * from guest_record
+   </select>
+<delete id="delete">
+    DELETE from guest_record where guestRecordId = #{guestRecordId}
+</delete>
+
+    <insert id="save" parameterType="guestRecord">
+        INSERT into guest_record (guestRecordHouseId,guestRecordUserId,guestRecordGuestName,guestRecordGuestTel,
+        guestRecordTenantryId,guestRecordSeeTime,guestRecordQuestion)VALUES (#{guestRecordHouseId},#{guestRecordUserId},
+        #{guestRecordGuestName},#{guestRecordGuestTel},#{guestRecordTenantryId},#{guestRecordSeeTime},#{guestRecordQuestion})
+    </insert>
+
+</mapper>

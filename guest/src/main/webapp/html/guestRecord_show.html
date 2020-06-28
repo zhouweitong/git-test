@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有购房信息列表</title>
+    <link rel="stylesheet" href="../css/guestRecord.css">
+    <script type="application/javascript" src="../js/jquery-1.8.3.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url:"http://localhost:8080/guest/list",
+                dataType:"json",
+                type:"get",
+                success:function (data) {
+                    for(var i = 0;i<data.guest.length;i++){
+                            $("table tr:last").after($("<tr>" +
+                                "<td>"+data.guest[i].guestRecordId+"</td>" +
+                                "<td>"+data.guest[i].guestRecordHouseId+"</td>" +
+                                "<td>"+data.guest[i].guestRecordUserId+"</td>\n" +
+                                "<td>"+data.guest[i].guestRecordGuestName+"</td>\n" +
+                                "<td>"+data.guest[i].guestRecordGuestTel+"</td>\n" +
+                                "<td>"+data.guest[i].guestRecordTenantryId+"</td>\n" +
+                                "<td>"+data.guestDate[i]+"</td>\n" +
+                                "<td>"+data.guest[i].guestRecordQuestion+"</td>\n" +
+                                "<td><button onclick='guestUpdate(this)'>修改</button></td>\n" +
+                                "<td><button onclick='guestDelete(this)'>删除</button></td>\n" +
+                                "</tr>"));
+                    }
+                }
+            });
+        });
+        function guestUpdate(node) {
+            var tyNode = node.parentNode.parentNode;
+            var id = tyNode.getElementsByTagName("td")[0].firstChild.nodeValue;
+            //var name = tyNode.getElementsByTagName("td")[1].firstChild.nodeValue;
+            $.ajax({
+                url:"http://localhost:8080/guest/get",
+                dataType:"json",
+                data:{"id":id},
+                success:function (data) {
+                    sessionStorage.setItem("guestRecordId",data.guest.guestRecordId);
+                    sessionStorage.setItem("guestRecordHouseId",data.guest.guestRecordHouseId);
+                    sessionStorage.setItem("guestRecordUserId",data.guest.guestRecordUserId);
+                    sessionStorage.setItem("guestRecordGuestName",data.guest.guestRecordGuestName);
+                    sessionStorage.setItem("guestRecordGuestTel",data.guest.guestRecordGuestTel);
+                    sessionStorage.setItem("guestRecordTenantryId",data.guest.guestRecordTenantryId);
+                    sessionStorage.setItem("guestRecordSeeTime",data.guestDate);
+                    sessionStorage.setItem("guestRecordQuestion",data.guest.guestRecordQuestion);
+                    window.location.href="http://localhost:8080/html/guestRecord_update.html";
+
+
+                }
+            })
+        }
+
+        function guestDelete(node) {
+            var tyNode = node.parentNode.parentNode;
+            var id = tyNode.getElementsByTagName("td")[0].firstChild.nodeValue;
+            $.ajax({
+                url:"http://localhost:8080/guest/delete",
+                dataType:"json",
+                data:{"id":id},
+                success:function (data) {
+                    if(data.msg=="success"){
+                        alert("删除成功");
+                        window.location.href="http://localhost:8080/html/guestRecord_show.html";
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="10">购房信息列表</th>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>房屋信息id</td>
+        <td>用户id</td>
+        <td>客户姓名</td>
+        <td>客户电话</td>
+        <td>承诺方id</td>
+        <td>看房时间</td>
+        <td>客户提出的问题</td>
+        <td>修改</td>
+        <td>删除</td>
+    </tr>
+</table>
+</body>
+</html>

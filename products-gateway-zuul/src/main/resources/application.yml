@@ -1,0 +1,16 @@
+server:
+  port: 3500
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@localhost:7777/eureka
+zuul:
+  routes:
+    products-eureka-consumer: /zhou/**
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000

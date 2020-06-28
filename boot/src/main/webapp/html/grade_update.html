@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加</title>
+    <link rel="stylesheet" href="../css/grade_add.css">
+    <script src="../js/jquery-1.8.3.js" type="application/javascript"></script>
+    <script>
+        $(function () {
+            var gradename = sessionStorage.getItem("gradename");
+            var id = sessionStorage.getItem("id");
+            $("input[name='gradename']").val(gradename);
+            $("#submitGrade").click(function () {
+                var $gradename = $("input[name='gradename']").val();
+                $.ajax({
+                   url:"http://localhost:8080/grade/updata",
+                    type:"post",
+                    dataType:"json",
+                    data:{"id":id,"gradeName":$gradename},
+                    success:function (data) {
+                        if(data.msg=="success"){
+                            alert("save success");
+                            location.href = "http://localhost:8080/html/grade_show.html";
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="2">修改课程</th>
+    </tr>
+    <tr>
+        <td>课程名称</td>
+        <td>
+            <input type="text" name="gradename">
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2"><button id="submitGrade">提交</button></th>
+    </tr>
+</table>
+
+</body>
+</html>

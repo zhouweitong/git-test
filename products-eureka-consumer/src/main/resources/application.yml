@@ -1,0 +1,12 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: products-eureka-consumer
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@peer1:7777/eureka
+feign:
+  hystrix:
+    enabled: true

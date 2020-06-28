@@ -1,0 +1,30 @@
+server:
+  port: 3500
+spring:
+  application:
+    name: blog-gateway-zuul
+  redis:
+      database: 0
+      host: 192.168.233.128
+      port: 6379
+      password: 123456
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@localhost:7777/eureka
+zuul:
+  routes:
+    blog-eureka-consumer: /zhou/**
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ReadTimeout: 12000
+  ConnectionTimeout: 1000
+management:
+  security:
+    enabled: false

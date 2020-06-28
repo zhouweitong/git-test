@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.productseurekaprovider.mapper.ProductMapper">
+    <select id="count" resultType="int">
+        SELECT COUNT(1) FROM products WHERE productName LIKE concat('%',#{productName},'%')
+    </select>
+    <select id="list" resultType="product">
+        SELECT * FROM  products
+        <where>
+            <if test="productName != null">
+                productName like concat('%',#{productName},'%')
+            </if>
+        </where>
+        <if test="size != 0">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="product">
+        INSERT INTO products(productName, productDate, productSum, productDesc, productPrice)
+		VALUES(#{productName},#{productDate},#{productSum},#{productDesc},#{productPrice})
+    </insert>
+</mapper>

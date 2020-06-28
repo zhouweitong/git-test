@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.guest.mapper.GuestRecordMapper">
+    <select id="get" resultType="guestRecord" parameterType="Integer">
+        select * from guest_record where guestRecordId = #{id}
+    </select>
+
+    <select id="list" resultType="guestRecord">
+        select * from guest_record
+    </select>
+
+    <insert id="add" parameterType="guestRecord">
+        insert INTO guest_record(guestRecordHouseId,guestRecordUserId,guestRecordGuestName,guestRecordGuestTel,
+        guestRecordTenantryId,guestRecordSeeTime,guestRecordQuestion)
+        VALUES (#{guestRecordHouseId},#{guestRecordUserId},#{guestRecordGuestName},#{guestRecordGuestTel},
+        #{guestRecordTenantryId},#{guestRecordSeeTime},#{guestRecordQuestion})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from guest_record where guestRecordId = #{id}
+    </delete>
+
+    <update id="update" parameterType="guestRecord">
+        update guest_record set
+        guestRecordHouseId=#{guestRecordHouseId},
+        guestRecordUserId=#{guestRecordUserId},
+        guestRecordGuestName=#{guestRecordGuestName},
+        guestRecordGuestTel=#{guestRecordGuestTel},
+        guestRecordTenantryId=#{guestRecordTenantryId},
+        guestRecordSeeTime=#{guestRecordSeeTime},
+        guestRecordQuestion=#{guestRecordQuestion}
+        where guestRecordId=#{guestRecordId}
+    </update>
+</mapper>
